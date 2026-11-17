@@ -1,6 +1,6 @@
 # Custom Agent Skills
 
-Personal repository of global AI agent skills for Google Antigravity (`~/.gemini/config/skills`), organized by a **Software Release Lifecycle** (`draft` → `beta` → `stable` → `deprecated`).
+Personal repository of global AI agent skills, organized by a **Software Release Lifecycle** (`draft` → `beta` → `stable` → `deprecated`).
 
 ---
 
