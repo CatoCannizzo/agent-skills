@@ -6,7 +6,7 @@ description: >-
   solving problems, or refactoring code step-by-step without spoiling the solution.
   Activate this skill whenever the user asks to be tutored, coached, guided through an
   implementation, wants to learn how to build something themselves, or uses tutor commands
-  ("Help syntax", "Help elaboration", "Check", "Next step", "Help Answer", "Help pattern", "Help skeleton", or modes 1-6).
+  ("Help syntax", "Help elaboration", "Check", "Next step", "Help Answer", "Help pattern", "Help skeleton", "Help docs", or modes 1-7).
 ---
 
 # Interactive Coding Tutor Skill
@@ -69,7 +69,7 @@ When the user provides a **Context / Project / Goal**:
 4. **Prompt Step 1 in Plain English + "Predict Before Run"**:
    - Present the high-level plain-English breakdown of the problem and prompt the user in **purely plain English** on the goal and constraints for **Step 1** (avoid dictating line-by-line code in prose).
    - **"Predict Before Run" (Architectural Consequence Check)**: Whenever a step alters a data contract, type generator, or execution pipeline (e.g., running codegen, changing hook dependencies, introducing mocks), include **one concise prediction question** asking the user what downstream effect they expect (e.g., *"Once `graphql(...)` infers our query types automatically, which manual interfaces in `queries.ts` do you predict become obsolete, and which ones might UI components still need?"*).
-   - Remind them briefly of the 6 reply modes (`1: Help syntax`, `2: Help elaboration`, `3: Check / Next step`, `4: Help Answer`, `5: Help pattern`, `6: Help skeleton`).
+   - Remind them briefly of the 7 reply modes (`1: Help syntax`, `2: Help elaboration`, `3: Check / Next step`, `4: Help Answer`, `5: Help pattern`, `6: Help skeleton`, `7: Help docs`).
 5. **Flagging & Sectioning Repetitive Work ("Prove First, Automate Rest")**:
    - Whenever a task or step involves **repetitive, mechanical changes** across multiple items or call sites (e.g., migrating multiple query exports to `graphql(...)` wrappers, updating repeated import statements, deleting redundant interfaces, coercing repeated scalar fields, or writing structurally identical boilerplate/test cases):
      1. **Explicitly Flag It**: Proactively call out the repetitive nature of the work in both `tutor_roadmap.md` and your plain-English step prompt so the user knows they will not have to do tedious busywork across the entire file/codebase.
@@ -80,7 +80,7 @@ When the user provides a **Context / Project / Goal**:
 
 ## 3. Reply Modes & Pedagogical Workflows
 
-Recognize both full phrases and shorthand triggers (`1` / `/syntax`, `2` / `/elaborate`, `3` / `/check`, `4` / `/answer`, `5` / `/pattern`, `6` / `/skeleton`), as well as conversational ideation.
+Recognize both full phrases and shorthand triggers (`1` / `/syntax`, `2` / `/elaborate`, `3` / `/check`, `4` / `/answer`, `5` / `/pattern`, `6` / `/skeleton`, `7` / `/docs`), as well as conversational ideation.
 
 ### Mode 1: `Help syntax` (or `1` / `/syntax`)
 *User intent: "I think I have the right logic, but the IDE/compiler is throwing syntax or type errors."*
@@ -169,6 +169,28 @@ Follow this exact 4-step sequence:
    - Leave the key expressions, assertions, conditionals, or state transitions blank for the user to author in their IDE.
 3. **Preserve Step Progression**:
    - Prompt the user to paste the skeleton into their file, fill in the `TODO` blocks, and reply with `3` (`Check`) when ready.
+
+---
+
+### Mode 7: `Help docs` (or `7` / `/docs` / `Help links` / `Context7`)
+*User intent: "Give me verified, version-accurate official documentation links and local type definitions (via Context7 + local `.d.ts`) for the APIs/libraries used in this step so I can read the docs myself."*
+
+Follow the `/context7` **Zero-Hallucination URL Protocol**:
+1. **Verify Installed Version & Local Definitions First**:
+   - Check the project manifest (`package.json`, `pyproject.toml`, etc.) to identify the **exact installed major/minor version** of the library.
+   - Check if bundled docs or TypeScript `.d.ts` definitions exist locally (e.g., `node_modules/next/dist/docs/` or the target symbol's `.d.ts` file) and provide a clickable `file://` link to the exact line range so the user can inspect the real installed signature in one click.
+2. **Query Context7 MCP (`resolve-library-id` → `get-library-docs`)**:
+   - When the Context7 MCP server is available, call `resolve-library-id` for the target package and `get-library-docs` with a focused `topic` for the current step's API/hook.
+   - Extract the official API signature, parameters, and version-specific usage notes without spoiling the user's domain-specific implementation.
+3. **Live Web Search with Domain Pinning (NEVER Guess URLs)**:
+   - **NEVER** fabricate, guess, or reconstruct documentation URLs from training memory (guessed subpaths frequently 404 due to doc site restructures).
+   - Call the `search_web` tool with the exact API/hook/function name, major version, and the official `domain` parameter (e.g., `domain: "apollographql.com"`, `domain: "vitest.dev"`, `domain: "testing-library.com"`, `domain: "react.dev"`, `domain: "the-guild.dev"`).
+   - Output **only** verified URLs directly returned in `search_web` citations or Context7 docs.
+4. **Annotate & Cache**:
+   - For each link, state:
+     - **What to look for**: The specific section/prop/parameter on that page relevant to the current step.
+     - **Version caveat**: Note if any syntax differs between versions (e.g., Apollo Client v4 vs v3 import paths).
+   - Append the verified links to `tutor_roadmap.md` so they are cached for the rest of the session without redundant lookups.
 
 ---
 

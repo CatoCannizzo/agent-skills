@@ -23,7 +23,8 @@ All active global skills live one level deep (`<skill-name>/SKILL.md`) for Antig
 
 | Skill | Status | Path | Summary & Capabilities |
 | :--- | :--- | :--- | :--- |
-| **`coding-tutor`** | `stable` | [`coding-tutor/SKILL.md`](./coding-tutor/SKILL.md) | Socratic coding mentor with 6 modes (Syntax, Elaborate, Check, Answer, Isomorphic + Non-Examples, Faded Skeleton), JIT file reading, Repetitive Work Sectioning ("Prove 1–3, Automate Rest"), Pre-Flight Calibration, Predict-Before-Run, and Post-Step Synthesis. |
+| **`coding-tutor`** | `stable` | [`coding-tutor/SKILL.md`](./coding-tutor/SKILL.md) | Socratic coding mentor with 7 modes (Syntax, Elaborate, Check, Answer, Isomorphic + Non-Examples, Faded Skeleton, Context7 Docs), JIT file reading, Repetitive Work Sectioning ("Prove 1–3, Automate Rest"), Pre-Flight Calibration, Predict-Before-Run, and Post-Step Synthesis. |
+| **`context7`** | `beta` | [`context7/SKILL.md`](./context7/SKILL.md) | Standalone version-accurate documentation and verified link lookup using Context7 MCP (`resolve-library-id` & `get-library-docs`), local `.d.ts` inspection, and domain-pinned web search. |
 | **`project-capsule-generator`** | `draft` | [`project-capsule-generator/SKILL.md`](./project-capsule-generator/SKILL.md) | Initial draft for extracting database, pipeline, and architecture metrics into standardized portfolio project capsules. |
 
 *(Note: Project-specific skills, such as `query-testing` for `real-estate-map`, live inside their respective workspace `.agents/skills/` directories rather than the global config.)*
