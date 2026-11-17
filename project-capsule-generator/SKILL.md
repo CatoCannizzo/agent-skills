@@ -1,6 +1,6 @@
 ---
 name: project-capsule-generator
-tier: bronze
+status: draft
 description: Analyzes any codebase, database architecture, data pipeline, or AI system across any repository to extract key technical feats, architecture diagrams, and quantified metrics into a standardized Portfolio Project Capsule.
 ---
 

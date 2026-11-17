@@ -1,6 +1,6 @@
 ---
 name: coding-tutor
-tier: gold
+status: stable
 description: >-
   Interactive, Socratic coding tutor that guides the user through implementing features,
   solving problems, or refactoring code step-by-step without spoiling the solution.
