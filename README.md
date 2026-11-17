@@ -6,7 +6,7 @@ Personal repository of global AI agent skills, organized by a **Software Release
 
 ## 🚀 Skill Release Lifecycle
 
-All active global skills live one level deep (`<skill-name>/SKILL.md`) for Antigravity's automatic skill discovery and declare their maturity via `status: draft | beta | stable | deprecated` in their YAML frontmatter.
+All active global skills live one level deep (`<skill-name>/SKILL.md`) for skill discovery and declare their maturity via `status: draft | beta | stable | deprecated` in their YAML frontmatter.
 
 ### Lifecycle Stages & Promotion Criteria
 
